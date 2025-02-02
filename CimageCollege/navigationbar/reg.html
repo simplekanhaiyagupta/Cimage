@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enquiry Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+}
+
+/* Enquiry Form Container */
+.enquiry-container {
+    width: 60%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 50px auto;
+    padding: 20px;
+}
+
+/* Header */
+.enquiry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.enquiry-header h2 {
+    margin: 0;
+}
+
+.close-btn {
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Form Layout */
+.enquiry-content {
+    display: flex;
+    gap: 20px;
+    padding-top: 20px;
+}
+
+/* Left Side (Image) */
+.enquiry-left img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* Right Side (Form) */
+.enquiry-right {
+    flex: 1;
+}
+
+.enquiry-right label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.enquiry-right input,
+.enquiry-right select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.enquiry-right input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* OTP Field */
+#otp {
+    background: #f0f0f0;
+    cursor: not-allowed;
+}
+
+/* Submit Button */
+.submit-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    margin-top: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.submit-btn:hover {
+    background: #0056b3;
+}
+
+    </style>
+    
+</head>
+<body>
+
+    <!-- Enquiry Form Popup -->
+    <div class="enquiry-container" id="enquiryForm">
+        <div class="enquiry-header">
+            <h2>Enquire Now</h2>
+            <span class="close-btn" onclick="closeForm()">Close(x)</span>
+        </div>
+
+        <div class="enquiry-content">
+            <div class="enquiry-left">
+                <img src="IMAGE/enq.jpeg" alt="CIMAGE College">
+            </div>
+            <div class="enquiry-right">
+                <form id="enquiryForm">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" placeholder="Enter Name *" required>
+
+                    <label for="mobile">Mobile Number *</label>
+                    <input type="tel" id="mobile" placeholder="Enter Mobile No. *" required oninput="validateMobile()">
+
+                    <label for="otp">OTP *</label>
+                    <input type="text" id="otp" placeholder="Enter OTP" readonly>
+
+                    <label for="course">Select Course *</label>
+                    <select id="course" required>
+                        <option value="">--SELECT--</option>
+                        <option value="MBA">MBA</option>
+                        <option value="MCA">MCA</option>
+                        <option value="BBA">BBA</option>
+                        <option value="BCA">BCA</option>
+                        <option value="B.Sc-IT">B.Sc-IT</option>
+                        <option value="B.Com(P)">B.Com(P)</option>
+                    </select>
+
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+<script>
+    // Function to close the form
+function closeForm() {
+    document.getElementById("enquiryForm").style.display = "none";
+}
+
+// Function to validate mobile number
+function validateMobile() {
+    const mobileField = document.getElementById("mobile");
+    if (!/^\d{10}$/.test(mobileField.value)) {
+        mobileField.style.border = "2px solid red";
+    } else {
+        mobileField.style.border = "2px solid green";
+        generateOTP();
+    }
+}
+
+// Function to generate OTP
+function generateOTP() {
+    const otpField = document.getElementById("otp");
+    otpField.value = Math.floor(100000 + Math.random() * 900000); // Generate 6-digit OTP
+}
+
+// Handle Form Submission
+document.getElementById("enquiryForm").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const name = document.getElementById("name").value;
+    const mobile = document.getElementById("mobile").value;
+    const otp = document.getElementById("otp").value;
+    const course = document.getElementById("course").value;
+
+    if (!name || !mobile || !otp || !course) {
+        alert("Please fill all fields!");
+        return;
+    }
+
+    alert("Your enquiry has been submitted successfully!");
+});
+
+</script>
+</body>
+</html>
